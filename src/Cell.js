@@ -1,7 +1,7 @@
 import React from "react";
-
-function Cell({ isMine, isRevealed, count }) {
-  let value = "isNotRevealed";
+import "./cell.css";
+function Cell({ isMine, isRevealed, count, onClick }) {
+  let value = " ";
   if (isRevealed) {
     if (isMine) {
       value = "💣";
@@ -9,7 +9,13 @@ function Cell({ isMine, isRevealed, count }) {
       value = count + "";
     }
   }
-  return <div style={{ height: "10px" }}>{value}</div>;
+
+  let styleClass = isRevealed ? "cell revealed-cell" : "cell hidden-cell";
+  return (
+    <div className={styleClass} onClick={onClick}>
+      {value}
+    </div>
+  );
 }
 
 export default Cell;

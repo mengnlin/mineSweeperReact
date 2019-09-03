@@ -5,8 +5,8 @@ import Board from "./Board";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">MineSweeper</header>
-      <Board size={7} />
+      {/* <header className="App-header">MineSweeper</header> */}
+      <Board size={15} />
     </div>
   );
 }

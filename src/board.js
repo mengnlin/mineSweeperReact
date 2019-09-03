@@ -1,7 +1,7 @@
 import React from "react";
 import Cell from "./Cell";
-
-function setNearMines(matrix) {
+import "./board.css";
+function setNearMinesCount(matrix) {
   let size = matrix.length;
   for (let row = 0; row < size; row++) {
     for (let col = 0; col < size; col++) {
@@ -27,18 +27,18 @@ function randomFillMines(size) {
   let matrix = Array.from({ length: size }).map(() =>
     Array.from({ length: size }).map(() => ({
       isMine: false,
-      isReveal: false,
+      isRevealed: false,
       count: 0
     }))
   );
   for (let row = 0; row < size; row++) {
     for (let col = 0; col < size; col++) {
-      if (Math.random() <= 0.2) {
+      if (Math.random() <= 0.3) {
         matrix[row][col].isMine = true;
       }
     }
   }
-  setNearMines(matrix);
+  setNearMinesCount(matrix);
   return matrix;
 }
 class Board extends React.Component {
@@ -49,21 +49,87 @@ class Board extends React.Component {
     };
   }
 
+  handleClick(row, col) {
+    let boardArray = this.state.board.map(row => row.map(ele => ele));
+    if (!boardArray[row][col].isMine) {
+      this.expandClick(boardArray, row, col);
+    } else {
+      this.gameOver(boardArray);
+    }
+    this.setState({ board: boardArray });
+  }
+  gameOver(board) {
+    let size = board.length;
+    for (let row = 0; row < size; row++) {
+      for (let col = 0; col < size; col++) {
+        board[row][col] = {
+          isMine: board[row][col].isMine,
+          isRevealed: true,
+          count: board[row][col].count
+        };
+      }
+    }
+  }
+  expandClick(matrix, row, col) {
+    // modify the matrix
+    let size = matrix.length;
+    let queue = [[row, col]];
+    let inqueue = new Set();
+    inqueue.add([row, col] + "");
+    let processingIdx = 0;
+    while (processingIdx < queue.length) {
+      let currentProcessing = queue[processingIdx];
+      let currentRow = currentProcessing[0];
+      let currentCol = currentProcessing[1];
+      addNeighbor(currentRow - 1, currentCol);
+      addNeighbor(currentRow + 1, currentCol);
+      addNeighbor(currentRow, currentCol + 1);
+      addNeighbor(currentRow, currentCol - 1);
+      matrix[currentRow][currentCol] = {
+        isMine: matrix[currentRow][currentCol].isMine,
+        isRevealed: true,
+        count: matrix[currentRow][currentCol].count
+      };
+      processingIdx++;
+    }
+
+    function addNeighbor(row, col) {
+      if (
+        row < 0 ||
+        row >= size ||
+        col < 0 ||
+        col >= size ||
+        inqueue.has([row, col] + "") ||
+        matrix[row][col].isMine
+      ) {
+        return;
+      }
+      queue.push([row, col]);
+      inqueue.add([row, col] + "");
+    }
+  }
+
   render() {
-    let boardArray = this.state.board.map(row => {
+    let boardArray = this.state.board.map((row, rowIdx) => {
       return (
-        <div>
-          {row.map(ele => (
+        <div className="cellRow" key={rowIdx}>
+          {row.map((ele, colIdx) => (
             <Cell
               isMine={ele.isMine}
               isRevealed={ele.isRevealed}
               count={ele.count}
+              onClick={() => this.handleClick(rowIdx, colIdx)}
+              key={colIdx}
             />
           ))}
         </div>
       );
     });
-    return <div>{boardArray}</div>;
+    return (
+      <div className="board-outer-container">
+        <div className="board-inner-container">{boardArray}</div>
+      </div>
+    );
   }
 }
 

@@ -1,0 +1,15 @@
+.cell {
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  border: 1px solid lightcoral;
+}
+
+.hidden-cell {
+  background: grey;
+}
+.revealed-cell {
+  background: lightgrey;
+}
