@@ -33,7 +33,7 @@ function randomFillMines(size) {
   );
   for (let row = 0; row < size; row++) {
     for (let col = 0; col < size; col++) {
-      if (Math.random() <= 0.3) {
+      if (Math.random() <= 0.12) {
         matrix[row][col].isMine = true;
       }
     }
@@ -53,11 +53,26 @@ class Board extends React.Component {
     let boardArray = this.state.board.map(row => row.map(ele => ele));
     if (!boardArray[row][col].isMine) {
       this.expandClick(boardArray, row, col);
+      if (this.checkWinning(boardArray)) {
+        this.props.onWin();
+      }
     } else {
       this.gameOver(boardArray);
     }
     this.setState({ board: boardArray });
   }
+  checkWinning(board) {
+    let size = board.length;
+    for (let row = 0; row < size; row++) {
+      for (let col = 0; col < size; col++) {
+        if (!board[row][col].isRevealed && !board[row][col].isMine) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   gameOver(board) {
     let size = board.length;
     for (let row = 0; row < size; row++) {
@@ -81,10 +96,12 @@ class Board extends React.Component {
       let currentProcessing = queue[processingIdx];
       let currentRow = currentProcessing[0];
       let currentCol = currentProcessing[1];
-      addNeighbor(currentRow - 1, currentCol);
-      addNeighbor(currentRow + 1, currentCol);
-      addNeighbor(currentRow, currentCol + 1);
-      addNeighbor(currentRow, currentCol - 1);
+      if (matrix[currentRow][currentCol].count === 0) {
+        addNeighbor(currentRow - 1, currentCol);
+        addNeighbor(currentRow + 1, currentCol);
+        addNeighbor(currentRow, currentCol + 1);
+        addNeighbor(currentRow, currentCol - 1);
+      }
       matrix[currentRow][currentCol] = {
         isMine: matrix[currentRow][currentCol].isMine,
         isRevealed: true,
