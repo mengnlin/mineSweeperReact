@@ -1,13 +1,10 @@
 .cellRow {
-  /* height: 20px; */
   display: flex;
   flex-direction: row;
-  /* margin-top: 5px; */
   background: rgb(189, 189, 189);
 }
 
 .board-inner-container {
-  /* margin-top: 80px; */
   display: flex;
   justify-content: center;
   align-items: center;

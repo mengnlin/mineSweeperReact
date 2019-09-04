@@ -5,11 +5,9 @@
   justify-content: center;
   align-items: center;
   width: 25px;
-  /* border: 1px solid lightcoral; */
 }
 
 .hidden-cell {
-  /* background: grey; */
   border-top: 4px solid rgb(255, 255, 255);
   border-left: 4px solid rgb(255, 255, 255);
   border-right: 4px solid rgb(123, 123, 123);

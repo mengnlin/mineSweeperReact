@@ -9,10 +9,8 @@ function Cell({ isMine, isRevealed, count, onClick, hasFlag, onContextMenu }) {
       value = count + "";
     }
   }
-  //   console.log(hasFlag);
   if (hasFlag) {
     value = "🚩";
-    // console.log("here");
   }
   let styleClass = isRevealed ? "cell revealed-cell" : "cell hidden-cell";
   return (
