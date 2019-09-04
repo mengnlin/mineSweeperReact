@@ -10,10 +10,8 @@
   /* margin-top: 80px; */
   display: flex;
   flex-direction: column;
-  background: green;
 }
 .board-outer-container {
-  margin-top: 150px;
   display: flex;
   justify-content: center;
 }

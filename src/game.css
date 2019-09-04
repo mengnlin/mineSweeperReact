@@ -1,3 +1,7 @@
 .game {
   text-align: center;
 }
+.winning {
+  color: lightcoral;
+  font-size: 40px;
+}

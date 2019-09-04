@@ -1,0 +1,17 @@
+.controlBar-containner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+  margin-bottom: 25px;
+}
+.controlBar-item {
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+  outline: none;
+  background: lightcoral;
+  /* color: greenyellow; */
+}

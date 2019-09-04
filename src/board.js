@@ -23,7 +23,7 @@ function setNearMinesCount(matrix) {
     }
   }
 }
-function randomFillMines(size) {
+function randomFillMines(size, probability) {
   let matrix = Array.from({ length: size }).map(() =>
     Array.from({ length: size }).map(() => ({
       isMine: false,
@@ -33,7 +33,7 @@ function randomFillMines(size) {
   );
   for (let row = 0; row < size; row++) {
     for (let col = 0; col < size; col++) {
-      if (Math.random() <= 0.12) {
+      if (Math.random() <= probability) {
         matrix[row][col].isMine = true;
       }
     }
@@ -45,7 +45,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      board: randomFillMines(props.size)
+      board: randomFillMines(props.size, props.mineProbability)
     };
   }
 
@@ -86,7 +86,6 @@ class Board extends React.Component {
     }
   }
   expandClick(matrix, row, col) {
-    // modify the matrix
     let size = matrix.length;
     let queue = [[row, col]];
     let inqueue = new Set();
