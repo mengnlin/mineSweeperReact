@@ -1,5 +1,5 @@
 import React from "react";
-import "./controlBar.css";
+import "./control-bar-style.css";
 
 function ControlBar({ onClick, onChange }) {
   return (

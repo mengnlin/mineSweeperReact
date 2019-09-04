@@ -1,5 +1,5 @@
 import React from "react";
-import "./cell.css";
+import "./cell-style.css";
 function Cell({ isMine, isRevealed, count, onClick, hasFlag, onContextMenu }) {
   let value = " ";
   if (isRevealed) {
