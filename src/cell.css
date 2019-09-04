@@ -1,15 +1,24 @@
 .cell {
   height: 25px;
   display: flex;
+  box-sizing: border-box;
   justify-content: center;
   align-items: center;
   width: 25px;
-  border: 1px solid lightcoral;
+  /* border: 1px solid lightcoral; */
 }
 
 .hidden-cell {
-  background: grey;
+  /* background: grey; */
+  border-top: 4px solid rgb(255, 255, 255);
+  border-left: 4px solid rgb(255, 255, 255);
+  border-right: 4px solid rgb(123, 123, 123);
+  border-bottom: 4px solid rgb(123, 123, 123);
+}
+.hidden-cell:hover {
+  cursor: pointer;
+  background: lightgray;
 }
 .revealed-cell {
-  background: lightgrey;
+  border: 1px solid rgb(150, 150, 150);
 }

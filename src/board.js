@@ -45,7 +45,8 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      board: randomFillMines(props.size, props.mineProbability)
+      board: randomFillMines(props.size, props.mineProbability),
+      gameover: false
     };
   }
 
@@ -57,6 +58,7 @@ class Board extends React.Component {
         this.props.onWin();
       }
     } else {
+      this.setState({ gameover: true });
       this.gameOver(boardArray);
     }
     this.setState({ board: boardArray });
@@ -144,6 +146,9 @@ class Board extends React.Component {
     return (
       <div className="board-outer-container">
         <div className="board-inner-container">{boardArray}</div>
+        {this.state.gameover ? (
+          <div className="game-over">Game Over!</div>
+        ) : null}
       </div>
     );
   }

@@ -3,6 +3,16 @@ import "./game.css";
 import Board from "./Board";
 import ControlBar from "./ControlBar";
 
+const mineHash = {
+  Easy: 0.1,
+  Medium: 0.1,
+  Hard: 0.1
+};
+const gridSize = {
+  Easy: 10,
+  Medium: 20,
+  Hard: 30
+};
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -21,27 +31,18 @@ class Game extends React.Component {
       isWin: false
     });
   }
+
   handleSelection(event) {
-    const mineHash = {
-      Easy: 0.1,
-      Medium: 0.2,
-      Hard: 0.3
-    };
-    const gridSize = {
-      Easy: 10,
-      Medium: 20,
-      Hard: 30
-    };
     this.setState({
       gridSize: gridSize[event.target.value],
       mineProbability: mineHash[event.target.value]
     });
-    console.log(this.state, this.state.gridSize);
-    event.preventDefault();
+    this.changeBoardId();
   }
   render() {
     return (
       <div className="game">
+        <div className="title">MineSweeper</div>
         <ControlBar
           onClick={() => this.changeBoardId()}
           onChange={e => this.handleSelection(e)}
