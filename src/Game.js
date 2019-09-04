@@ -1,7 +1,7 @@
 import React from "react";
 import "./game-style.css";
-import Board from "./Board";
-import ControlBar from "./ControlBar";
+import Board from "./Board.js";
+import ControlBar from "./ControlBar.js";
 
 const mineHash = {
   Easy: 0.1,

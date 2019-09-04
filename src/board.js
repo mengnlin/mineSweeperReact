@@ -1,5 +1,5 @@
 import React from "react";
-import Cell from "./Cell";
+import Cell from "./Cell.js";
 import "./board-style.css";
 function setNearMinesCount(matrix) {
   let size = matrix.length;
