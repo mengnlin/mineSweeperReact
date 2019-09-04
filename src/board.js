@@ -28,7 +28,8 @@ function randomFillMines(size, probability) {
     Array.from({ length: size }).map(() => ({
       isMine: false,
       isRevealed: false,
-      count: 0
+      count: 0,
+      hadFlag: false
     }))
   );
   for (let row = 0; row < size; row++) {
@@ -50,8 +51,10 @@ class Board extends React.Component {
     };
   }
 
-  handleClick(row, col) {
+  handleClick(row, col, e) {
+    // console.log(e.type);
     let boardArray = this.state.board.map(row => row.map(ele => ele));
+    // if (e.type === "click") {
     if (!boardArray[row][col].isMine) {
       this.expandClick(boardArray, row, col);
       if (this.checkWinning(boardArray)) {
@@ -61,7 +64,27 @@ class Board extends React.Component {
       this.setState({ gameover: true });
       this.gameOver(boardArray);
     }
+    // } else if (e.type === "contextmenu") {
+    //   boardArray[row][col] = {
+    //     isMine: boardArray[row][col].isMine,
+    //     isRevealed: boardArray[row][col].isRevealed,
+    //     count: boardArray[row][col].count,
+    //     hasFlag: true
+    // }
+    // }
     this.setState({ board: boardArray });
+  }
+
+  handleContextMenu(row, col, e) {
+    let boardArray = this.state.board.map(row => row.map(ele => ele));
+    boardArray[row][col] = {
+      isMine: boardArray[row][col].isMine,
+      isRevealed: boardArray[row][col].isRevealed,
+      count: boardArray[row][col].count,
+      hasFlag: true
+    };
+    this.setState({ board: boardArray });
+    e.preventDefault();
   }
   checkWinning(board) {
     let size = board.length;
@@ -82,7 +105,8 @@ class Board extends React.Component {
         board[row][col] = {
           isMine: board[row][col].isMine,
           isRevealed: true,
-          count: board[row][col].count
+          count: board[row][col].count,
+          hasFlag: board[row][col].hasFlag
         };
       }
     }
@@ -106,7 +130,8 @@ class Board extends React.Component {
       matrix[currentRow][currentCol] = {
         isMine: matrix[currentRow][currentCol].isMine,
         isRevealed: true,
-        count: matrix[currentRow][currentCol].count
+        count: matrix[currentRow][currentCol].count,
+        hasFlag: matrix[currentRow][currentCol].hasFlag
       };
       processingIdx++;
     }
@@ -136,8 +161,10 @@ class Board extends React.Component {
               isMine={ele.isMine}
               isRevealed={ele.isRevealed}
               count={ele.count}
-              onClick={() => this.handleClick(rowIdx, colIdx)}
+              onClick={e => this.handleClick(rowIdx, colIdx, e)}
               key={colIdx}
+              hasFlag={ele.hasFlag}
+              onContextMenu={e => this.handleContextMenu(rowIdx, colIdx, e)}
             />
           ))}
         </div>
