@@ -8,8 +8,7 @@ function Cell({ isMine, isRevealed, count, onClick, hasFlag, onContextMenu }) {
     } else if (count > 0) {
       value = count + "";
     }
-  }
-  if (hasFlag) {
+  } else if (hasFlag) {
     value = "🚩";
   }
   let styleClass = isRevealed ? "cell revealed-cell" : "cell hidden-cell";

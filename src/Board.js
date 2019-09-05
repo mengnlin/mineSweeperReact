@@ -67,12 +67,21 @@ class Board extends React.Component {
 
   handleContextMenu(row, col, e) {
     let boardArray = this.state.board.map(row => row.map(ele => ele));
-    boardArray[row][col] = {
-      isMine: boardArray[row][col].isMine,
-      isRevealed: boardArray[row][col].isRevealed,
-      count: boardArray[row][col].count,
-      hasFlag: true
-    };
+    if (!boardArray[row][col].hasFlag) {
+      boardArray[row][col] = {
+        isMine: boardArray[row][col].isMine,
+        isRevealed: boardArray[row][col].isRevealed,
+        count: boardArray[row][col].count,
+        hasFlag: true
+      };
+    } else {
+      boardArray[row][col] = {
+        isMine: boardArray[row][col].isMine,
+        isRevealed: boardArray[row][col].isRevealed,
+        count: boardArray[row][col].count,
+        hasFlag: false
+      };
+    }
     this.setState({ board: boardArray });
     e.preventDefault();
   }
